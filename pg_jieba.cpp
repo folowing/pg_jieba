@@ -18,6 +18,7 @@
 extern "C" {
 #endif
 
+#include <libintl.h>
 #include "postgres.h"
 #include "utils/guc.h"
 #include "utils/elog.h"

@@ -314,6 +314,14 @@ Datum jieba_query_start(PG_FUNCTION_ARGS)
              static_cast<unsigned long>(PG_GETARG_INT32(1)));
   auto words = new vector<string>();
   jieba->CutForSearch(str, *words);
+  auto it = std::begin(*words);
+  while (it != std::end(*words)) {
+      if (*it == " " || *it == "\t" || *it == "　") {
+          it = words->erase(it);
+      } else {
+          ++it;
+      }
+  }
 
   JiebaCtx* const ctx = static_cast<JiebaCtx*>(palloc0(sizeof(JiebaCtx)));
   ctx->words = words;

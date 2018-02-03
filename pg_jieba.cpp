@@ -292,6 +292,7 @@ Datum jieba_start(PG_FUNCTION_ARGS)
   string str(static_cast<char*>(PG_GETARG_POINTER(0)),
                  static_cast<unsigned long>(PG_GETARG_INT32(1)));
   auto words = new vector<string>();
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
   jieba->Cut(str, *words);
   auto it = std::begin(*words);
   while (it != std::end(*words)) {
@@ -313,6 +314,7 @@ Datum jieba_query_start(PG_FUNCTION_ARGS)
   string str(static_cast<char*>(PG_GETARG_POINTER(0)),
              static_cast<unsigned long>(PG_GETARG_INT32(1)));
   auto words = new vector<string>();
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
   jieba->CutForSearch(str, *words);
   auto it = std::begin(*words);
   while (it != std::end(*words)) {
